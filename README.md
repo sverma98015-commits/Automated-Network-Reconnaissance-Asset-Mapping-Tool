@@ -19,19 +19,16 @@ This tool performs active ARP discovery on a local subnet to identify active hos
 * **Vulnerability Detection:** Automated checks for high-risk ports (FTP/SMB) to flag potential attack vectors.
 * **Change Detection:** Historical logging facilitates the identification of unauthorized or "Unknown" assets appearing on the network over time.
 
-## ⚡ Quick Start
+Quick Start
 
-### 1. Dependencies
-Install the required libraries:
-```bash
-pip install -r requirements.txt
-2. Execution
+1. pip install -r requirements.txt
+Execution
 Run the script with administrative privileges to enable raw packet capture:
 
 Bash
-python z.py
-3. Asset Inventory
+2.python z.py
+Asset Inventory
 Maintain your local known_devices.txt file by adding the MAC addresses of trusted hardware (one per line, lowercase).
 
-📊 Audit & Compliance
+**📊 Audit & Compliance**********
 The tool generates master_log.csv upon each scan completion. For security auditing, ensure this file is preserved to track network evolution and device behavior over time.

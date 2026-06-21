@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/screenshot.JPG" alt="Project Screenshot" width="1000">
+  <img src="screenshot.JPG" alt="Project Screenshot" width="1000">
 </p>
 
 <h1 align="center">Automated Network Reconnaissance & Asset Mapping Tool</h1>
@@ -14,7 +14,7 @@ Python • Scapy • ARP Discovery • Asset Tracking • Security Auditing
 
 A Python-based utility for automated local network reconnaissance and hardware asset mapping.
 
-The tool performs active ARP-based network discovery to identify hosts on a local subnet, classify known and unknown assets, enumerate common services, assess potential security risks, and maintain a historical audit trail through persistent CSV logging.
+The tool performs active ARP-based network discovery to identify hosts on a local subnet, classify known and unknown assets, enumerate common network services, assess potential security risks, and maintain a historical audit trail through persistent CSV logging.
 
 ---
 
@@ -90,9 +90,7 @@ The tool performs active ARP-based network discovery to identify hosts on a loca
 ```text
 Automated-Network-Reconnaissance-Asset-Mapping-Tool/
 │
-├── assets/
-│   └── screenshot.JPG
-│
+├── screenshot.JPG
 ├── b.py
 ├── known_devices.txt
 ├── master_log.csv
@@ -181,16 +179,6 @@ Hosts exposing FTP or SMB services are flagged as CRITICAL for further review.
 
 ---
 
-## Screenshot
-
-<p align="center">
-  <img src="assets/screenshot.JPG" alt="Network Reconnaissance Scan" width="1000">
-</p>
-
-The screenshot demonstrates live network asset discovery, MAC address identification, hostname resolution, service enumeration, asset classification, and risk assessment.
-
----
-
 ## Audit Logging
 
 Each completed scan automatically appends results to:
@@ -217,12 +205,6 @@ Only scan networks and systems for which you have explicit permission.
 
 ---
 
-## Author
+## Repository
 
-Satyam Verma
-
----
-
-## License
-
-This project is provided for educational and authorized security assessment purposes.
+https://github.com/sverma98015-commits/Automated-Network-Reconnaissance-Asset-Mapping-Tool

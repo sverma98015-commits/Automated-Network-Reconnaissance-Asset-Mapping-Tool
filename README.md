@@ -1,75 +1,99 @@
-# 🔍 Automated Network Reconnaissance & Asset Mapping Tool
+<p align="center">
+  <img src="assets/screenshot.JPG" alt="Project Screenshot" width="1000">
+</p>
 
-> **Python-based utility for automated local network reconnaissance, asset discovery, and security auditing.**
+<h1 align="center">Automated Network Reconnaissance & Asset Mapping Tool</h1>
 
----
-
-## 📖 Overview
-
-This tool performs **active ARP-based network discovery** across a local subnet to identify active hosts and map network assets in real time.
-
-It provides detailed visibility into:
-
-- Active devices on the network
-- Hardware asset identification via MAC addresses
-- Open service ports
-- Risk assessment indicators
-- Historical audit logging
-
-All collected data is exported to a persistent **CSV audit log**, enabling long-term asset tracking and change detection.
+<p align="center">
+Python • Scapy • ARP Discovery • Asset Tracking • Security Auditing
+</p>
 
 ---
 
-## ⚙️ Technical Stack
+## Overview
 
-| Component | Technology |
-|-----------|------------|
-| Network Discovery | `scapy` |
-| Concurrency | `concurrent.futures` |
-| Data Logging | `csv` |
-| Reporting | `tabulate` |
-| Language | `Python 3` |
+A Python-based utility for automated local network reconnaissance and hardware asset mapping.
+
+The tool performs active ARP-based network discovery to identify hosts on a local subnet, classify known and unknown assets, enumerate common services, assess potential security risks, and maintain a historical audit trail through persistent CSV logging.
 
 ---
 
-## 🚀 Key Features
+## Features
 
-### 🖥️ MAC-Based Asset Tracking
-Track devices using their unique hardware (MAC) addresses rather than IP addresses, ensuring accurate identification even when DHCP assignments change.
-
-### 🔎 Automated Host Discovery
-Performs active ARP scanning to rapidly discover live hosts across the target subnet.
-
-### ⚡ Multi-Threaded Port Analysis
-Utilizes `ThreadPoolExecutor` for concurrent scanning, significantly improving performance on larger networks.
-
-### 🛡️ Vulnerability Detection
-Automatically identifies potentially risky services and ports, including:
-
-- FTP (Port 21)
-- SMB (Ports 139 / 445)
-
-These services are flagged for further security review.
-
-### 📊 Historical Change Detection
-Maintains a master audit log, allowing administrators to:
-
-- Detect newly connected devices
-- Identify unknown assets
-- Monitor network growth
-- Track infrastructure changes over time
-
-### 📁 Persistent Audit Logging
-Every scan result is automatically appended to a centralized CSV database for compliance and auditing purposes.
+* Active ARP-based host discovery using Scapy
+* Automatic local subnet detection
+* MAC address-based asset identification
+* Reverse DNS hostname resolution
+* Multi-threaded host analysis using ThreadPoolExecutor
+* Open port enumeration
+* Known and Unknown asset classification
+* Risk assessment for exposed FTP and SMB services
+* Persistent CSV audit logging
+* Historical asset tracking and change detection
 
 ---
 
-## 📂 Project Structure
+## Technology Stack
+
+| Component         | Technology         |
+| ----------------- | ------------------ |
+| Language          | Python 3           |
+| Network Discovery | Scapy              |
+| Concurrency       | concurrent.futures |
+| Networking        | socket             |
+| Logging           | csv                |
+| Reporting         | tabulate           |
+
+---
+
+## Architecture
 
 ```text
-project/
+┌─────────────────────┐
+│ Local Network Scan  │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ ARP Host Discovery  │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ Host Enumeration    │
+│ • MAC Address       │
+│ • Hostname          │
+│ • Open Ports        │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ Asset Classification│
+│ Known / Unknown     │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ Risk Assessment     │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ CSV Audit Logging   │
+└─────────────────────┘
+```
+
+---
+
+## Project Structure
+
+```text
+Automated-Network-Reconnaissance-Asset-Mapping-Tool/
 │
-├── z.py
+├── assets/
+│   └── screenshot.JPG
+│
+├── b.py
 ├── known_devices.txt
 ├── master_log.csv
 ├── requirements.txt
@@ -78,13 +102,13 @@ project/
 
 ---
 
-## 📦 Installation
+## Installation
 
 ### Clone Repository
 
 ```bash
-git clone <repository-url>
-cd project
+git clone https://github.com/sverma98015-commits/Automated-Network-Reconnaissance-Asset-Mapping-Tool.git
+cd Automated-Network-Reconnaissance-Asset-Mapping-Tool
 ```
 
 ### Install Dependencies
@@ -95,21 +119,21 @@ pip install -r requirements.txt
 
 ---
 
-## ▶️ Execution
+## Usage
 
-Run the scanner with administrative privileges to enable raw packet capture and ARP operations.
+Run the scanner with administrative privileges:
 
 ```bash
-python z.py
+python b.py
 ```
 
-> ⚠️ Administrator/root privileges may be required depending on your operating system.
+Administrator or root privileges may be required for ARP scanning and raw packet operations.
 
 ---
 
-## 📝 Asset Inventory Management
+## Asset Inventory Management
 
-Maintain a local inventory of trusted devices using:
+Trusted devices are maintained in:
 
 ```text
 known_devices.txt
@@ -118,57 +142,87 @@ known_devices.txt
 Add one MAC address per line:
 
 ```text
-aa:bb:cc:dd:ee:ff
-11:22:33:44:55:66
+d8:b3:2f:07:aa:26
+6e:61:4b:4e:c7:fa
+8e:f1:76:57:06:32
 ```
 
-Requirements:
-
-- Lowercase format
-- One address per line
-- No additional comments or spaces
+Devices found in this list will be classified as Known during scanning.
 
 ---
 
-## 📈 Audit & Compliance
+## Risk Assessment
 
-After each scan, the tool automatically generates:
+The tool checks common network services including:
+
+| Port | Service |
+| ---- | ------- |
+| 21   | FTP     |
+| 22   | SSH     |
+| 80   | HTTP    |
+| 443  | HTTPS   |
+| 445  | SMB     |
+
+Hosts exposing FTP or SMB services are flagged as CRITICAL for further review.
+
+---
+
+## Sample Output
+
+```text
++---------------------+---------------+-------------------+-------------+-----------+---------+----------+
+| Time                | IP            | MAC               | Name        | Ports     | Status  | Risk     |
++---------------------+---------------+-------------------+-------------+-----------+---------+----------+
+| 2026-06-20 10:30:12 | 192.168.31.1  | xx:xx:xx:xx:xx:xx | Router      | 80,443    | Known   | Safe     |
+| 2026-06-20 10:30:12 | 192.168.31.58 | xx:xx:xx:xx:xx:xx | N/A         | 22        | Unknown | Safe     |
+| 2026-06-20 10:30:12 | 192.168.31.233| xx:xx:xx:xx:xx:xx | Device      | 21,445    | Known   | CRITICAL |
++---------------------+---------------+-------------------+-------------+-----------+---------+----------+
+```
+
+---
+
+## Screenshot
+
+<p align="center">
+  <img src="assets/screenshot.JPG" alt="Network Reconnaissance Scan" width="1000">
+</p>
+
+The screenshot demonstrates live network asset discovery, MAC address identification, hostname resolution, service enumeration, asset classification, and risk assessment.
+
+---
+
+## Audit Logging
+
+Each completed scan automatically appends results to:
 
 ```text
 master_log.csv
 ```
 
-This file serves as a historical audit database and should be preserved for:
+The log serves as a historical audit trail for:
 
-- Security assessments
-- Asset management
-- Compliance reporting
-- Unauthorized device detection
-- Network change tracking
-
----
-
-## 🎯 Use Cases
-
-- Network Asset Inventory
-- Security Auditing
-- Internal Network Monitoring
-- Unauthorized Device Detection
-- Small Office Infrastructure Management
-- Home Lab Security Assessment
+* Asset inventory management
+* Unauthorized device detection
+* Security auditing
+* Network change tracking
+* Compliance documentation
 
 ---
 
-## 🔒 Security Note
+## Security Notice
 
-This utility is intended for **authorized network environments only**. Ensure you have permission to scan and monitor any network before use.
+This tool is intended solely for authorized network administration, security auditing, educational purposes, and asset inventory management.
 
----
-
-## 📜 License
-
-This project is provided for educational, research, and authorized security assessment purposes.
+Only scan networks and systems for which you have explicit permission.
 
 ---
 
-### 👨‍💻 Developed for Network Visibility, Asset Management & Security Auditing
+## Author
+
+Satyam Verma
+
+---
+
+## License
+
+This project is provided for educational and authorized security assessment purposes.

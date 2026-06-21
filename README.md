@@ -1,34 +1,47 @@
 Markdown
-# Network Asset Auditor
+# 🛡️ Network Asset Auditor
 
-A Python-based utility for automated local network reconnaissance and hardware asset mapping.
+A high-performance Python utility designed for automated local network reconnaissance, hardware asset mapping, and security auditing.
 
 ---
 
-## 📋 Overview
-This tool performs active ARP discovery on a local subnet to identify active hosts. It provides real-time mapping of device status, open ports, and risk metrics, outputting data to a persistent CSV log for historical audit trails.
+## 🔍 Project Philosophy
+This tool was engineered to address the need for **persistent asset tracking** in dynamic network environments. By utilizing ARP-based discovery and MAC-address matching, it ensures reliable device identification regardless of DHCP-assigned IP address changes.
 
-## 🛠 Technical Stack
-* **Discovery:** `scapy` (ARP protocol manipulation)
-* **Concurrency:** `concurrent.futures` (ThreadPoolExecutor for optimized scanning)
-* **Logging:** `csv` (automated master log generation)
-* **Reporting:** `tabulate` (CLI formatting)
+## ⚙️ Technical Architecture
+* **Discovery Engine:** Uses `scapy` to craft and send raw Ethernet/ARP packets, ensuring deep visibility into the local subnet.
+* **Concurrency:** Implemented via `concurrent.futures.ThreadPoolExecutor` to perform multi-threaded port scanning, significantly reducing audit time.
+* **Security Intelligence:** Automatically flags high-risk services (FTP/SMB) to identify potential attack vectors.
+* **Persistence:** Generates structured CSV logs for historical trend analysis and change detection.
 
-## 🚀 Key Features
-* **MAC-Based Asset Tracking:** Persistent identification using hardware addresses, bypassing dynamic IP changes.
-* **Vulnerability Detection:** Automated checks for high-risk ports (FTP/SMB) to flag potential attack vectors.
-* **Change Detection:** Historical logging facilitates the identification of unauthorized or "Unknown" assets appearing on the network over time.
+---
 
-Quick Start
+## 🚀 Deployment Guide
 
-1. pip install -r requirements.txt
+### Prerequisites
+Ensure you have Python installed, then install the required dependencies:
+```bash
+pip install -r requirements.txt
 Execution
-Run the script with administrative privileges to enable raw packet capture:
+Run the auditor with Administrative Privileges to allow the raw socket access required for packet injection:
 
 Bash
-2.python z.py
-Asset Inventory
-Maintain your local known_devices.txt file by adding the MAC addresses of trusted hardware (one per line, lowercase).
+python z.py
+Asset Management
+The system relies on your known_devices.txt as the Source of Truth.
 
-**📊 Audit & Compliance**********
-The tool generates master_log.csv upon each scan completion. For security auditing, ensure this file is preserved to track network evolution and device behavior over time.
+Format: One MAC address per line, in lowercase (e.g., d8:b3:2f:07:aa:26).
+
+Strict Control: The application strictly monitors this list and will never auto-modify it, ensuring your configuration remains immutable.
+
+📊 Security Auditing
+The generated master_log.csv serves as your primary security artifact. Use this for:
+
+Change Detection: Compare historical MAC entries to identify unauthorized new hardware.
+
+Vulnerability Assessment: Monitor for devices exposing sensitive ports.
+
+Compliance Reporting: Maintain a chronological inventory of every device seen on the network.
+
+📝 License & Attribution
+Developed for educational security research. Use only on networks you own or have explicit authorization to audit.
